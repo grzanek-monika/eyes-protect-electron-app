@@ -6,26 +6,21 @@ import { useMemo } from 'react';
 
 const App = () => {
 
-  const [status, setStatus] = useState('work');
+  const [status, setStatus] = useState('off');
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(null);
 
-  useEffect(() => {
-    if(status === 'off') {
-      setViewDescription(true); 
-      setViewWork(false);
-      setViewRest(false);
-    } else if (status === 'work') {
-      setViewDescription(false);
-      setViewWork(true);
-    } else if (status === 'rest') {
-      setViewDescription(false);
-      setViewWork(false);
-      setViewRest(true);
-    }
-  }, [status]);
+  
+  const startTimer = () => {
+    setTime(1200);
+    setStatus('work');
+    setTimer(setInterval(() => {
+        setTime((time) => time - 1);
+      }, 1)
+    )
+  }
 
-  const formatTime = useMemo((time) => {
+  const formatTime = (time) => {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
 
@@ -33,7 +28,7 @@ const App = () => {
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
     return minutes + ":" + seconds;
-  }, [time]);
+  };
 
   return (
     <div>
@@ -46,7 +41,7 @@ const App = () => {
         {(status !== 'off') && <div className="timer">
           {formatTime(time)}
         </div>}
-        {(status === 'off') && <button className="btn">Start</button>}
+        {(status === 'off') && <button onClick={startTimer} className="btn">Start</button>}
         {(status !== 'off') && <button className="btn">Stop</button>}
       <button className="btn btn-close">X</button>
     </div>
