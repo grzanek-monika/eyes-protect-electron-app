@@ -10,13 +10,20 @@ const App = () => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(null);
 
+  const soundBell = './sounds/bell.wav';
+
+  const playBell = () => {
+    const sound = new Audio(soundBell);
+    sound.play();
+  }
+
   
   const startTimer = () => {
     setTime(1200);
     setStatus('work');
     setTimer(setInterval(() => {
         setTime((time) => time - 1);
-      }, 100)
+      }, 1000)
     )
   }
 
@@ -44,9 +51,11 @@ const App = () => {
     if(time === 0){
       if(status === 'work') {
         setStatus('rest');
+        playBell();
         setTime(20);
       } else if(status === 'rest'){
         setStatus('work');
+        playBell();
         setTime(1200);
       }
     }
