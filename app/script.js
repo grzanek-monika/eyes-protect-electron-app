@@ -16,7 +16,7 @@ const App = () => {
     setStatus('work');
     setTimer(setInterval(() => {
         setTime((time) => time - 1);
-      }, 1)
+      }, 100)
     )
   }
 
@@ -29,6 +29,18 @@ const App = () => {
 
     return minutes + ":" + seconds;
   };
+
+  useEffect(() => {
+    if(time === 0){
+      if(status === 'work') {
+        setStatus('rest');
+        setTime(20);
+      } else if(status === 'rest'){
+        setStatus('work');
+        setTime(1200);
+      }
+    }
+  }, [time]);
 
   return (
     <div>
