@@ -20,6 +20,16 @@ const App = () => {
     )
   }
 
+  const stopTimer = () => {
+    setTimer(clearInterval(timer));
+    setTime(0);
+    setStatus('off');
+  }
+
+  const closeApp = ()  => {
+    window.close();
+  }
+
   const formatTime = (time) => {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
@@ -54,8 +64,8 @@ const App = () => {
           {formatTime(time)}
         </div>}
         {(status === 'off') && <button onClick={startTimer} className="btn">Start</button>}
-        {(status !== 'off') && <button className="btn">Stop</button>}
-      <button className="btn btn-close">X</button>
+        {(status !== 'off') && <button onClick={stopTimer} className="btn">Stop</button>}
+      <button onClick={closeApp} className="btn btn-close">X</button>
     </div>
   )
 };
